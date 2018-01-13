@@ -1,0 +1,6 @@
+graft   flask_shuffle/templates
+graft   flask_shuffle/static
+include flask_shuffle/schema.sql
+include VERSION
+include LICENSE
+include README.md

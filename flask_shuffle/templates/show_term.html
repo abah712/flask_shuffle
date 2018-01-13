@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if term %}
+        <em><a href='{{ term.url|safe }}'>{{ term.term }}</a></em>
+        &nbsp;
+        {{ term.pronunciation }}
+        &nbsp;
+        <button onclick="show_response()">show</button>
+        &nbsp;
+        <span id="response" style="display:none;">
+          {{ term.response }}
+        </span> 
+    {% endif %}
+    
+    <script>
+    function show_response() {
+        var x = document.getElementById("response");
+        if (x.style.display === "none") {
+            x.style.display = "inline";
+        } else {
+            x.style.display = "none";
+        }
+    } 
+    </script>
+{% endblock %}

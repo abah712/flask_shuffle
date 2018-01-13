@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if session.logged_in %}
+    <form action="{{ url_for('modify_term', id=term.id) }}" method=post class=add-term>
+        <label for="term">Term:</label>
+        <input type="text" size=40 name="term" value="{{ term.term }}"><br>
+        <label for="pronunciation">Pronunciation:</label>
+        <input type="text" size=40 name="pronunciation" value="{{ term.pronunciation }}"><br>
+        <label for="response">Response:</label>
+        <input type="text" size=40 name="response" value="{{ term.response }}"><br>
+        <label for="url">Url:</label>
+        <!-- <textarea name="url" rows=5 cols=40>{{ term.url }}</textarea><br> -->
+        <input type="text" size=60 name="url" value="{{ term.url }}"><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% endif %}
+{% endblock %}

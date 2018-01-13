@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div style="overflow-x:auto;">
+    {% if terms %}
+    <table id="t01">
+        <thead>
+        <tr>
+            <th>term  </th>
+            <th>pronunc.</th>
+            <th>response</th>
+            <th>url   </th>
+            <th>showed</th>
+            <th>modify</th>
+            <th>delete</th>
+        </tr>
+        </thead>
+        </tbody>
+        {% for term in terms %}
+        <tr>
+            <td>{{ term.term|truncate(35) }}    </div></td>
+            <td>{{ term.pronunciation|truncate(35) }}    </div></td>
+            <td>{{ term.response|truncate(35) }}</div></td>
+            <td>{{ term.url|head_truncate(35) }}</div></td>
+            <td style="text-align: center;">{{ term.showed }}  </td>
+            <td style="text-align: center;"><a href="{{ url_for('modify_term', id=term.id) }}">mod</a></td>
+            <td style="text-align: center;"><a href="{{ url_for('delete_term', id=term.id) }}">del</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <em>Unbelievable. No entries here so far</em>
+    {% endif %}
+    </div>
+{% endblock %}

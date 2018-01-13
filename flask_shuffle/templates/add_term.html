@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if session.logged_in %}
+        <form action="{{ url_for('add_term') }}" method=post class=add-term>
+            <label for="term">Term:</label>
+            <input type="text" size=40 name="term"><br>
+            <label for="pronunciation">Pronunciation:</label>
+            <input type="text" size=40 name="pronunciation"><br>
+            <label for="response">Response:</label>
+            <input type="text" size=40 name="response"><br>
+            <label for="url">Url:</label>
+            <input type="text" size=60 name="url"><br>
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+{% endblock %}
