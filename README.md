@@ -145,6 +145,7 @@ virtualenv -p python3.5 venv
 . venv/bin/activate
 pip install Flask
 pip install --editable .
+chown -R apache:apache ../flask_shuffle
 ```
 
 Only once, it's necessary initialize the database:

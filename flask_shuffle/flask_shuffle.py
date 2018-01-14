@@ -2,15 +2,14 @@
 """
     ### flask_shuffle ###
 
-    A simple application to manage english terms. Inspired to the
-    Flask tutorial, with Flask and sqlite3.
+    A simple web application to manage english terms. Inspired to the
+    Flask tutorial. With Flask and sqlite3.
 
     :copyright: (c) 2018 by Luciano De Falco Alfano.
     :license: MIT (https://opensource.org/licenses/MIT),
               see LICENSE for more details.
 """
 
-# import copy
 # import pdb
 import os
 import sqlite3
@@ -46,9 +45,10 @@ app.config.update(dict(
 ))
 app.config.from_envvar('SHUFFLE_SETTINGS', silent=True)
 
-with open('/webroot/flask_shuffle/dbname.txt', mode='a', buffering=1 ) as f:
-    f.write('root: ' + app.root_path + '\n')
-    f.write('db:   ' + app.config['DATABASE'] + '\n')
+# ldfa@2018-01-14 #1 bugfix, disabling write db path on a fixed log file
+# with open('/webroot/flask_shuffle/dbname.txt', mode='a', buffering=1 ) as f:
+#     f.write('root: ' + app.root_path + '\n')
+#     f.write('db:   ' + app.config['DATABASE'] + '\n')
 
 
 def connect_db():
