@@ -35,14 +35,16 @@ git clone https://github.com/l-dfa/flask_shuffle.git
 
 You'll get this base structure:
 
+```
 .../flask_shuffle
-      - flask_shuffle
-          - static
-          - templates
+      |- flask_shuffle
+          |- static
+          |- templates
           flask_shuffle.py
-          other stuff
+          <other stuff>
       setup.py
-      other stuff
+      <other stuff>
+```
 
 Now create
 the environment, activate it, install *Flask*.
@@ -150,6 +152,10 @@ cd flask_shuffle
 export FLASK_APP=flask_shuffle.py 
 flask initdb
 ```
+
+**Attention**. Change user and password cabled in *flask_shuffle.py*. Search for 
+USERNAME and PASSWORD in file using a whatever text editor.
+
 
 Include the Apache configuration contained in *shuffle.domain.org.conf* file
 in */etc/http/conf/httpd.conf* file. Better: maintaining this file 
