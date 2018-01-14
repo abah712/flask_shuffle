@@ -63,10 +63,11 @@ pip install Flask       # install Flask in flask_shuffle/venv
 Using the activated development environment, install the application as
 follows.
 
-Install the application:
+Install the application (--editable: in case of corrections it isn't necessary
+ to reinstall all from start):
 
 ```
-pip install .           # install flask_shuffle project
+pip install --editable .           # install flask_shuffle project
 ```
 
 Set the environment with the application file, and if you wish, with 
@@ -126,8 +127,9 @@ environment, you could check and adapt these files:
 Of course it's necessary install using *virtualenv*. So assuming your server
 has:
 
-* Centos v.6.x,
-* Apache already installed and configured as vhosts,
+* *Centos* v.6.x,
+* *Apache* already installed and configured as vhosts,
+* *git* installed,
 * *Python* version 3.5 as *python3.5*,
 * *virtualenv* already installed,
 * */webroot* as root for web sites,
@@ -142,7 +144,7 @@ cd flask_shuffle
 virtualenv -p python3.5 venv
 . venv/bin/activate
 pip install Flask
-pip install --editable .  # --editable: in case of little corrections it isn't necessary to reinstall all from start
+pip install --editable .
 ```
 
 Only once, it's necessary initialize the database:
