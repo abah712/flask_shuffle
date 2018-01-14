@@ -27,23 +27,33 @@ Then, if needed, you can install *virtualenv* using:
 pip install virtualenv
 ```
 
-Create a directory to host the project (*.../flask_shuffle*), create
+Then clone the project fom Github:
+
+```
+git clone https://github.com/l-dfa/flask_shuffle.git
+```
+
+You'll get this base structure:
+
+.../flask_shuffle
+      - flask_shuffle
+          - static
+          - templates
+          flask_shuffle.py
+          other stuff
+      setup.py
+      other stuff
+
+Now create
 the environment, activate it, install *Flask*.
 
 Seems difficult? Not really. Do these:
 
 ```
-mkdir flask_shuffle
 cd flask_shuffle
 virtualenv venv         # load Python and core libs in flask_shuffle/venv
 . venv/bin/activate     # (in Windows: venv\Scripts\Activate) start isolation
 pip install Flask       # install Flask in flask_shuffle/venv
-git ...
-pip install .           # install flask_shuffle project
-cd flask_shuffle
-export FLASK_APP=flask_shuffle.py
-flask initdb
-flask run
 ```
 
 ### Installing
@@ -51,24 +61,25 @@ flask run
 Using the activated development environment, install the application as
 follows.
 
-Download the application, and install it:
+Install the application:
 
 ```
-git ...
 pip install .           # install flask_shuffle project
 ```
 
-go to the application home directory (.../flask_shuffle/flask_shuffle) and 
-set the environment with the application file:
+Set the environment with the application file, and if you wish, with 
+the debugging option:
+
+```
+export FLASK_DEBUG=true            # (windows? use: SET FLASK_DEBUG=true)
+export FLASK_APP=flask_shuffle.py  # (windows? use: SET FLASK_APP=flask_shuffle.py)
+```
+
+Go to the application home directory (.../flask_shuffle/flask_shuffle) and 
+once, and only once, initialize the database.
 
 ```
 cd flask_shuffle
-export FLASK_APP=flask_shuffle.py
-```
-
-Once, and only once, initialize the database.
-
-```
 flask initdb
 ```
 
@@ -81,7 +92,7 @@ flask run
 And now you can browse to http://127.0.0.1:5000 to see ... an empty
 window. Of course: we have an empty database.
 
-To add terms to show make login using user *admin* with 
+To add terms to show, make login using user *admin* with 
 password *default*. Then click on *add* to show the word data entry form.
 Compile and submit it.
 
@@ -90,7 +101,69 @@ clicking on *Shuffle*.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+You can found general instructions to deploy *Flask* applications in production 
+environment at [this address](http://flask.pocoo.org/docs/0.12/deploying/).
+
+However, if you wish to deploy on a server using Apache (httpd service) with
+*mod_wsgi*, and 
+using virtualenv to isolate your flask_shuffle application from server
+environment, you could check and adapt these files:
+
+* *shuffle.domain.org.conf* contains a tipical httpd configuration
+  of a virtual host answering at http://shuffle.domain.org address, with
+  deployment directory /webroot/flask_shuffle.
+  
+  Be aware of *WSGIDaemonProcess*. Here you must indicate *python-path*
+  with correct *site-packages* location. If you have more than one
+  python versions, it's possible you must indicate the correct python version,
+  here: *.../python3.5/site-packages*.
+  
+* *flask_shuffle/flask_shuffle/flask_shuffle.wsgi* implements the 
+  wsgi application starting flask_shuffle from /webroot/flask_shuffle.
+
+Of course it's necessary install using *virtualenv*. So assuming your server
+has:
+
+* Centos v.6.x,
+* Apache already installed and configured as vhosts,
+* *Python* version 3.5 as *python3.5*,
+* *virtualenv* already installed,
+* */webroot* as root for web sites,
+* domain *shuffle.domain.org* correctly configured via DNS to your server IP,
+
+you could use the following instructions:
+
+```
+cd /webroot
+git clone https://github.com/l-dfa/flask_shuffle.git
+cd flask_shuffle
+virtualenv -p python3.5 venv
+. venv/bin/activate
+pip install Flask
+pip install --editable .  # --editable: in case of little corrections it isn't necessary to reinstall all from start
+```
+
+Only once, it's necessary initialize the database:
+
+```
+cd flask_shuffle
+export FLASK_APP=flask_shuffle.py 
+flask initdb
+```
+
+Include the Apache configuration contained in *shuffle.domain.org.conf* file
+in */etc/http/conf/httpd.conf* file. Better: maintaining this file 
+displaced from httpd.conf, and including its contents using the directive: 
+
+```
+Include /etc/httpd/conf/vhosts/shuffle.domain.org.conf
+```
+
+Finally, don't forget to restart Apache:
+
+```
+service httpd restart
+```
 
 ## Built With
 
@@ -99,78 +172,17 @@ Add additional notes about how to deploy this on a live system
 development environment,
 * [Flask](http://flask.pocoo.org/) - web development framework.
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* *Luciano De Falco Alfano* - Initial work
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+Thanks to all developers and contributors of the used language and environments.
 
-
-
-
-
-use:
-
-    cd flask_shuffle
-    venv\Scripts\activate
-    set FLASK_DEBUG=true
-    set FLASK_APP=shuffle
-    cd shuffle
-    flask run
-
-### development
-
-as flask tutorial indicates
-
-base environment:
-
-    cd flask_shuffle
-    virtualenv venv
-    venv\Scripts\activate
-    pip install Flask
-    pip install -r requirements.txt
-
-it's a package. to install:
-
-    cd flask_shuffle
-    venv\Scripts\activate
-    pip install --editable .
-
-### data structure ###
-
-* foreign term,
-* url to online dictionay, where we'll found (hopefully):
-    * sound,
-    * IPA pronunciation,
-    * explanation,
-* how many times application showed the term
-
-### available functions
-
-* add term,
-* change term,
-* delete term,
-* show a term
-    * next term
-    * previous term
-* show randomly a term 
-    * term only
-    * all data about last term showed
+And thanks to everyone has spent some time (his/her life!) to read, or test,
+this code.
